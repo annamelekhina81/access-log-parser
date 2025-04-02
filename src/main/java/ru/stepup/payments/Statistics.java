@@ -22,7 +22,6 @@ public class Statistics {
     }
 
     public void addEntry(ArrayList<LogEntry> logEntryArr) {
-        //this.logEntriesArrays=new ArrayList<>(Arrays.asList(logEntry));
         long sumAmount = 0;
         this.minTime = logEntryArr.get(0).getData();
         this.maxTime = logEntryArr.get(logEntryArr.size() - 1).getData();
@@ -82,16 +81,14 @@ public class Statistics {
     }
 
     public double averageAttendanceUser(ArrayList<LogEntry> logEntryArr) {
-        int s = 0;
-        HashMap<String, String> map = new HashMap<>();
-        for (int i = 0; i < logEntryArr.size() - 1; i++) {
-            if (!Objects.isNull(logEntryArr.get(i).userAgent.getBrowser())
-                    && !Objects.equals(logEntryArr.get(i).userAgent.getBrowser(), "Bot")) {
-                map.put(logEntryArr.get(i).getIp(), logEntryArr.get(i).userAgent.getBrowser());
-                s = s + 1;
-            }
-        }
-        return (double) map.size() / s;
+        List<LogEntry> list= logEntryArr
+                .stream().filter(logEntry1 -> !Objects.isNull(logEntry1.userAgent.getBrowser()))
+                .filter(logEntry1 -> !Objects.equals(logEntry1.userAgent.getBrowser(), "Bot")).toList();
+        HashMap<String, String> mapList= (HashMap<String, String>) list.stream()
+                .collect(Collectors.toMap(logEntry1 -> logEntry1.getIp(), logEntry1 -> logEntry1.userAgent.getBrowser(),
+                        (oldValue,newValue) -> newValue));
+
+        return (double)  mapList.size()/list.size();
     }
 
     public HashSet<String> getPageOk() {
