@@ -34,7 +34,7 @@ public class Main {
                         //System.out.println(logEntry.toString());
                     }
                     Statistics st = new Statistics();
-                    //System.out.println(logEntriesArrays);
+                    System.out.println(logEntriesArrays);
                     st.addEntry(logEntriesArrays);
                     System.out.println("Полный объем трафика за весь период = " + st.getTotalTraffic());
                     System.out.println("Средний объем трафика за час = " + st.getTotalTrafficHour());
@@ -45,7 +45,7 @@ public class Main {
                     //System.out.println(st.getPageOk().toString());
                     System.out.println("Частота встречаемости ОС: "+st.getOs());
                     System.out.println("Доля ОС в общем объеме: "+st.getOsStatictic());
-                    System.out.println("Список страниц с ошибкой 404: "+st.getPageError().toString());
+                    //System.out.println("Список страниц с ошибкой 404: "+st.getPageError().toString());
                     System.out.println("Частота встречаемости браузеров: "+st.getBrowser());
                     System.out.println("Доля браузеров в общем объеме: "+st.getBrowserStat());
                     System.out.println("Среднее количество посещений за час: "+st.numberOfVisitsPerHour());

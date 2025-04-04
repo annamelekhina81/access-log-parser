@@ -2,13 +2,14 @@ package ru.stepup.payments;
 
 
 public class UserAgent {
-    private String str, os, browser;
+    private String os, browser;
+    boolean bot;
 
     UserAgent(String str) {
-        this.str = str;
         setBrowser(str);
         setOs(str);
-    }
+        isBot(str);
+      }
 
     public void setBrowser(String str) {
         String[] browser = str.split(" ");
@@ -22,11 +23,17 @@ public class UserAgent {
             } else if (browser[i].contains("Edge")) {
                 this.browser = "Edge";
             }
-            else if (browser[i].contains("Bot")){
-                this.browser="Bot";
-            }
-
         }
+    }
+
+    public boolean isBot(String str) {
+        String[] bot = str.split(" ");
+        for (int i = 0; i <= bot.length - 1; i++) {
+            if (bot[i].contains("Bot")) {
+                return this.bot = true;
+            }
+        }
+        return this.bot=false;
     }
 
     public void setOs(String str) {
@@ -38,12 +45,12 @@ public class UserAgent {
                 this.os = "Macintosh";
             } else if (os[i].contains("Linux")) {
                 this.os = "Linux";
-            }
-            else if (os[i].contains("iOS")) {
+            } else if (os[i].contains("iOS")) {
                 this.os = "iOS";
             }
         }
     }
+
 
     public String getOs() {
         return os;
@@ -53,11 +60,16 @@ public class UserAgent {
         return browser;
     }
 
+    public boolean getBot() {
+        return bot;
+    }
+
     @Override
     public String toString() {
         return "UserAgent{" +
-                ", os='" + getOs() + '\'' +
+                " os='" + getOs() + '\'' +
                 ", browser='" + getBrowser() + '\'' +
+                ", bot='" + getBot() + '\'' +
                 '}';
     }
 }
