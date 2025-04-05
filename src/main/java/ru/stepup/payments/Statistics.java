@@ -16,6 +16,7 @@ public class Statistics {
     private final HashMap<String, Double> osStatictic = new HashMap<>();
     private final HashMap<String, Double> browserStat = new HashMap<>();
     ArrayList<LogEntry> logEntriesArrays = new ArrayList<>();
+    long bot;
 
     public Statistics() {
     }
@@ -23,6 +24,7 @@ public class Statistics {
     public void addEntry(ArrayList<LogEntry> logEntryArr) {
         this.logEntriesArrays = logEntryArr;
         long sumAmount = 0;
+        long sumBot=0;
         this.minTime = logEntryArr.get(0).getData();
         this.maxTime = logEntryArr.get(logEntryArr.size() - 1).getData();
         this.hours = Duration.between(this.minTime, this.maxTime).toHours();
@@ -44,9 +46,13 @@ public class Statistics {
             } else {
                 browser.put(logEntryArr.get(i).userAgent.getBrowser(), 1);
             }
+            if (logEntryArr.get(i).userAgent.getBot()){
+                sumBot=sumBot+1;
+            }
         }
         this.totalTraffic = sumAmount;
         this.totalTrafficHour = totalTraffic / hours;
+        this.bot=sumBot;
     }
 
 
@@ -69,7 +75,7 @@ public class Statistics {
     public long numberOfVisitsPerHour() {
         int s = 0;
         for (Map.Entry<String, Integer> entry : browser.entrySet()) {
-            if (!browser.containsKey("null") || !browser.containsKey("Bot")) {
+            if (!browser.containsKey("null")) {
                 s += entry.getValue();
             }
         }
@@ -83,7 +89,7 @@ public class Statistics {
     public double averageAttendanceUser() {
         List<LogEntry> list = this.logEntriesArrays
                 .stream().filter(logEntry1 -> !Objects.isNull(logEntry1.userAgent.getBrowser()))
-                .filter(logEntry1 -> !Objects.equals(logEntry1.userAgent.getBrowser(), "Bot")).toList();
+                .filter(logEntry1 -> Objects.equals(logEntry1.userAgent.getBot(),false)).toList();
         HashMap<String, String> mapList = (HashMap<String, String>) list.stream()
                 .collect(Collectors.toMap(logEntry1 -> logEntry1.getIp(), logEntry1 -> logEntry1.userAgent.getBrowser(),
                         (oldValue, newValue) -> newValue));
@@ -94,7 +100,7 @@ public class Statistics {
     public Map.Entry<LocalDateTime, Long> peakAttendanceSecond() {
         List<LogEntry> list = this.logEntriesArrays
                 .stream().filter(logEntry1 -> !Objects.isNull(logEntry1.userAgent.getBrowser()))
-                .filter(logEntry1 -> !Objects.equals(logEntry1.userAgent.getBrowser(), "Bot")).toList();
+                .filter(logEntry1 -> Objects.equals(logEntry1.userAgent.getBot(), false)).toList();
         Map<LocalDateTime, Long> result =
                 list.stream().collect(Collectors.groupingBy(logEntry1 -> logEntry1.getData(), Collectors.counting()));
         return Collections.max(result.entrySet(), Map.Entry.comparingByValue());
@@ -118,7 +124,7 @@ public class Statistics {
     public Map.Entry<String, Long> maximumAttendanceUser() {
         List<LogEntry> listUser = this.logEntriesArrays
                 .stream().filter(logEntry1 -> !Objects.isNull(logEntry1.userAgent.getBrowser()))
-                .filter(logEntry1 -> !Objects.equals(logEntry1.userAgent.getBrowser(), "Bot")).toList();
+                .filter(logEntry1 -> !Objects.equals(logEntry1.userAgent.getBot(), true)).toList();
         Map<String, Long> result =
                 listUser.stream().collect(Collectors.groupingBy(logEntry1 -> logEntry1.getIp(), Collectors.counting()));
         return Collections.max(result.entrySet(), Map.Entry.comparingByValue());
@@ -176,13 +182,24 @@ public class Statistics {
         return maxTime;
     }
 
+    public long getBot() {
+        return bot;
+    }
+
     @Override
     public String toString() {
         return "Statistics{" +
                 "logEntry=" + logEntry +
-                ", totalTraffic=" + getTotalTraffic() +
                 ", minTime=" + getMinTime() +
                 ", maxTime=" + getMaxTime() +
+                ", totalTraffic= " + getTotalTraffic() +
+                ", TotalTrafficHour= "+ getTotalTrafficHour()+
+                ", st.getOs= " +getOs()+
+                ", getOsStatictic= "+ getOsStatictic()+
+                ", getBrowser= "+ getBrowser()+
+                ", getBrowserStat= "+getBrowserStat()+
+                ", numberOfVisitsPerHour= "+ numberOfVisitsPerHour()+
+                ", numbersOfErrorsRequest= "+ numbersOfErrorsRequest()+
                 '}';
     }
 }

@@ -3,11 +3,13 @@ package ru.stepup.payments;
 
 public class UserAgent {
     private String str, os, browser;
+    boolean bot;
 
     UserAgent(String str) {
         this.str = str;
         setBrowser(str);
         setOs(str);
+        isBot(str);
     }
 
     public void setBrowser(String str) {
@@ -22,11 +24,16 @@ public class UserAgent {
             } else if (browser[i].contains("Edge")) {
                 this.browser = "Edge";
             }
-            else if (browser[i].contains("Bot")){
-                this.browser="Bot";
-            }
-
         }
+    }
+    public boolean isBot(String str) {
+        String[] bot = str.split(" ");
+        for (int i = 0; i <= bot.length - 1; i++) {
+            if (bot[i].contains("Bot")) {
+                return this.bot = true;
+            }
+        }
+        return this.bot=false;
     }
 
     public void setOs(String str) {
@@ -47,6 +54,10 @@ public class UserAgent {
 
     public String getOs() {
         return os;
+    }
+
+    public boolean getBot() {
+        return bot;
     }
 
     public String getBrowser() {

@@ -40,23 +40,24 @@ public class Main {
                     System.out.println("Средний объем трафика за час = " + st.getTotalTrafficHour());
                     //System.out.println("За выбранный период ");
                     //st.getTrafficRate(logEntriesArrays, LocalDate.of(2022, Month.SEPTEMBER, 25).atTime(6, 25, 5),
-                    //        LocalDate.of(2022, Month.SEPTEMBER, 25).atTime(6, 25, 7));
+                    //       LocalDate.of(2022, Month.SEPTEMBER, 25).atTime(6, 25, 7));
                     //System.out.println("Общий объем трафика за выбранный период: " + st.getMinTime() + " до " + st.getMaxTime() + " = " + st.getTotalTrafficPeriod());
-                    //System.out.println(st.getPageOk().toString());
+                    //System.out.println("Список страниц с кодом 200 = "+st.getPageOk().toString());
                     System.out.println("---------------------------------------");
-                    System.out.println("Частота встречаемости ОС: "+st.getOs());
-                    System.out.println("Доля ОС в общем объеме: "+st.getOsStatictic());
-                    System.out.println("Список страниц с ошибкой 404: "+st.getPageError().toString());
-                    System.out.println("Частота встречаемости браузеров: "+st.getBrowser());
-                    System.out.println("Доля браузеров в общем объеме: "+st.getBrowserStat());
+                    System.out.println("Частота встречаемости ОС: " + st.getOs());
+                    System.out.println("Доля ОС в общем объеме: " + st.getOsStatictic());
+                    System.out.println("Список страниц с ошибкой 404: " + st.getPageError().toString());
+                    System.out.println("Частота встречаемости браузеров: " + st.getBrowser());
+                    System.out.println("Количество ботов, посещаемых сайт: " + st.getBot());
+                    System.out.println("Доля браузеров в общем объеме: " + st.getBrowserStat());
                     System.out.println("---------------------------------------");
-                    System.out.println("Среднее количество посещений за час: "+st.numberOfVisitsPerHour());
-                    System.out.println("Cреднее количество ошибочных запросов в час: "+st.numbersOfErrorsRequest());
-                    System.out.println("Средняя посещаемость одним пользователем: "+st.averageAttendanceUser());
+                    System.out.println("Среднее количество посещений за час: " + st.numberOfVisitsPerHour());
+                    System.out.println("Cреднее количество ошибочных запросов в час: " + st.numbersOfErrorsRequest());
+                    System.out.println("Средняя посещаемость одним пользователем: " + st.averageAttendanceUser());
                     System.out.println("---------------------------------------");
-                    System.out.println("Пиковая посещаемость сайта (в секунду): "+st.peakAttendanceSecond());
-                    System.out.println("Список сайтов: "+st.listOfSites());
-                    System.out.println("Максимальная посещаемость уникальным пользователем: "+ st.maximumAttendanceUser());
+                    System.out.println("Пиковая посещаемость сайта (в секунду): " + st.peakAttendanceSecond());
+                    System.out.println("Список сайтов: " + st.listOfSites());
+                    System.out.println("Максимальная посещаемость уникальным пользователем: " + st.maximumAttendanceUser());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
